@@ -18,7 +18,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\Routing\RouteCollectionBuilder;
 
 /**
  * @author Guilhem N. <guilhem.niot@gmail.com>
@@ -65,33 +64,33 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    protected function configureContainer(ContainerBuilder $containerBuilder, LoaderInterface $loader): void
+    protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
     {
-        $containerBuilder->loadFromExtension('framework', array(
+        $container->loadFromExtension('framework', array(
             'secret' => 'MySecretKey',
             'test' => null,
             'form' => null,
         ));
 
-        $containerBuilder->loadFromExtension('security', array(
+        $container->loadFromExtension('security', array(
             'providers' => array('permissive' => array('id' => 'app.user_provider')),
             'password_hashers' => array('FOS\MessageBundle\Tests\Functional\Entity\User' => 'plaintext'),
             'firewalls' => array('main' => array('http_basic' => true)),
         ));
 
-        $containerBuilder->loadFromExtension('twig', array(
+        $container->loadFromExtension('twig', array(
             'strict_variables' => '%kernel.debug%',
         ));
 
-        $containerBuilder->loadFromExtension('fos_message', array(
+        $container->loadFromExtension('fos_message', array(
             'db_driver' => 'orm',
             'thread_class' => Thread::class,
             'message_class' => Message::class,
         ));
 
-        $containerBuilder->register('fos_user.user_to_username_transformer', UserToUsernameTransformer::class);
-        $containerBuilder->register('app.user_provider', UserProvider::class);
-        $containerBuilder->addCompilerPass(new RegisteringManagersPass());
+        $container->register('fos_user.user_to_username_transformer', UserToUsernameTransformer::class);
+        $container->register('app.user_provider', UserProvider::class);
+        $container->addCompilerPass(new RegisteringManagersPass());
     }
 
 
