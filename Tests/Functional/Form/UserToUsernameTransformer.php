@@ -5,15 +5,12 @@ namespace FOS\MessageBundle\Tests\Functional\Form;
 use FOS\MessageBundle\Tests\Functional\Entity\User;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserToUsernameTransformer implements DataTransformerInterface
 {
-    public function transform($value)
+    public function transform($value): mixed
     {
-        if (null === $value) {
-            return;
-        }
-
         if (!$value instanceof User) {
             throw new \RuntimeException();
         }
@@ -30,7 +27,7 @@ class UserToUsernameTransformer implements DataTransformerInterface
      *
      * @return UserInterface the corresponding UserInterface instance
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): UserInterface
     {
         return new User();
     }

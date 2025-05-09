@@ -13,8 +13,6 @@ interface ParticipantInterface
 {
     /**
      * Gets the unique identifier of the participant.
-     *
-     * @return mixed
      */
-    public function getId();
+    public function getId(): mixed;
 }

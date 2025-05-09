@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=8.2",
         "doctrine/collections": "^2.0",
         "symfony/form": "^6.4|^7.0",
         "symfony/framework-bundle": "^6.4|^7.0",

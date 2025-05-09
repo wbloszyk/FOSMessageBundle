@@ -33,7 +33,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
      *
      * @return string
      */
-    public function transform($recipients)
+    public function transform($recipients): mixed
     {
         if (null === $recipients || 0 === $recipients->count()) {
             return '';
@@ -58,7 +58,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
      *
      * @return Collection $recipients
      */
-    public function reverseTransform($usernames)
+    public function reverseTransform($usernames): mixed
     {
         if (null === $usernames || '' === $usernames) {
             return null;

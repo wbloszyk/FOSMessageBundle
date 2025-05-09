@@ -17,6 +17,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
 /**
@@ -29,7 +30,7 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
         $bundles = array(
             new FrameworkBundle(),
@@ -41,10 +42,22 @@ class TestKernel extends Kernel
         return $bundles;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    public function getCacheDir(): string
+    {
+        return \sprintf('%scache', $this->getBaseDir());
+    }
+
+    public function getLogDir(): string
+    {
+        return \sprintf('%slog', $this->getBaseDir());
+    }
+
+    public function getProjectDir(): string
+    {
+        return __DIR__;
+    }
+
+    protected function configureRoutes(RoutingConfigurator $routes): void
     {
         $routes->import('@FOSMessageBundle/Resources/config/routing.xml');
     }
@@ -52,36 +65,39 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
+    protected function configureContainer(ContainerBuilder $containerBuilder, LoaderInterface $loader): void
     {
-        $c->loadFromExtension('framework', array(
+        $containerBuilder->loadFromExtension('framework', array(
             'secret' => 'MySecretKey',
             'test' => null,
             'form' => null,
-            'templating' => array(
-                'engines' => array('twig'),
-            ),
         ));
 
-        $c->loadFromExtension('security', array(
+        $containerBuilder->loadFromExtension('security', array(
             'providers' => array('permissive' => array('id' => 'app.user_provider')),
-            'encoders' => array('FOS\MessageBundle\Tests\Functional\Entity\User' => 'plaintext'),
+            'password_hashers' => array('FOS\MessageBundle\Tests\Functional\Entity\User' => 'plaintext'),
             'firewalls' => array('main' => array('http_basic' => true)),
         ));
 
-        $c->loadFromExtension('twig', array(
+        $containerBuilder->loadFromExtension('twig', array(
             'strict_variables' => '%kernel.debug%',
         ));
 
-        $c->loadFromExtension('fos_message', array(
+        $containerBuilder->loadFromExtension('fos_message', array(
             'db_driver' => 'orm',
             'thread_class' => Thread::class,
             'message_class' => Message::class,
         ));
 
-        $c->register('fos_user.user_to_username_transformer', UserToUsernameTransformer::class);
-        $c->register('app.user_provider', UserProvider::class);
-        $c->addCompilerPass(new RegisteringManagersPass());
+        $containerBuilder->register('fos_user.user_to_username_transformer', UserToUsernameTransformer::class);
+        $containerBuilder->register('app.user_provider', UserProvider::class);
+        $containerBuilder->addCompilerPass(new RegisteringManagersPass());
+    }
+
+
+    private function getBaseDir(): string
+    {
+        return \sprintf('%s/fos-message-bundle/var/', sys_get_temp_dir());
     }
 }
 
