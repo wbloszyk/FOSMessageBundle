@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\EntityManager;
 
+use Doctrine\DBAL\ParameterType;
 use Doctrine\ORM\EntityManager;
 use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
@@ -69,7 +70,7 @@ class MessageManager extends BaseMessageManager
             ->setParameter('sender', $participant->getId())
 
             ->andWhere('mm.isRead = :isRead')
-            ->setParameter('isRead', false, \PDO::PARAM_BOOL)
+            ->setParameter('isRead', false, ParameterType::BOOLEAN)
 
             ->getQuery()
             ->getSingleScalarResult();
@@ -122,7 +123,7 @@ class MessageManager extends BaseMessageManager
         $this->em->createQueryBuilder()
             ->update($this->metaClass, 'm')
             ->set('m.isRead', '?1')
-            ->setParameter('1', (bool) $isRead, \PDO::PARAM_BOOL)
+            ->setParameter('1', (bool) $isRead, ParameterType::BOOLEAN)
 
             ->where('m.id = :id')
             ->setParameter('id', $meta->getId())
