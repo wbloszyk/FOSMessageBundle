@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use FOS\MessageBundle\Model\MessageInterface;
@@ -9,8 +10,16 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\Thread as BaseThread;
 use FOS\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
 
+#[ORM\MappedSuperclass]
+#[ORM\Table(name: 'fos_message_thread')]
 abstract class Thread extends BaseThread
 {
+    #[ORM\Column(name: 'subject', type: 'string')]
+    protected $subject;
+
+    #[ORM\Column(name: 'is_spam', type: 'boolean')]
+    protected $isSpam = false;
+
     /**
      * Messages contained in this thread.
      *
@@ -52,6 +61,7 @@ abstract class Thread extends BaseThread
      *
      * @var \DateTime
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime')]
     protected $createdAt;
 
     /**
