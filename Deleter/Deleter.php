@@ -8,8 +8,8 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\Security\AuthorizerInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Marks threads as deleted.
@@ -56,7 +56,7 @@ class Deleter implements DeleterInterface
         }
         $thread->setIsDeletedByParticipant($this->getAuthenticatedParticipant(), true);
 
-        $this->dispatcher->dispatch(FOSMessageEvents::POST_DELETE, new ThreadEvent($thread));
+        $this->dispatcher->dispatch(new ThreadEvent($thread), FOSMessageEvents::POST_DELETE);
     }
 
     /**
@@ -69,7 +69,7 @@ class Deleter implements DeleterInterface
         }
         $thread->setIsDeletedByParticipant($this->getAuthenticatedParticipant(), false);
 
-        $this->dispatcher->dispatch(FOSMessageEvents::POST_UNDELETE, new ThreadEvent($thread));
+        $this->dispatcher->dispatch(new ThreadEvent($thread), FOSMessageEvents::POST_UNDELETE);
     }
 
     /**

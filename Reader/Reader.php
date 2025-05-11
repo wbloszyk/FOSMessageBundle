@@ -8,7 +8,7 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\ModelManager\ReadableManagerInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Marks messages and threads as read or unread.
@@ -56,7 +56,7 @@ class Reader implements ReaderInterface
         }
         $this->readableManager->markAsReadByParticipant($readable, $participant);
 
-        $this->dispatcher->dispatch(FOSMessageEvents::POST_READ, new ReadableEvent($readable));
+        $this->dispatcher->dispatch(new ReadableEvent($readable), FOSMessageEvents::POST_READ);
     }
 
     /**
@@ -70,7 +70,7 @@ class Reader implements ReaderInterface
         }
         $this->readableManager->markAsUnreadByParticipant($readable, $participant);
 
-        $this->dispatcher->dispatch(FOSMessageEvents::POST_UNREAD, new ReadableEvent($readable));
+        $this->dispatcher->dispatch(new ReadableEvent($readable), FOSMessageEvents::POST_UNREAD);
     }
 
     /**
