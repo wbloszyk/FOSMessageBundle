@@ -7,20 +7,14 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ThreadEvent extends Event
 {
-    /**
-     * @var ThreadInterface
-     */
-    private $thread;
+    private ThreadInterface $thread;
 
     public function __construct(ThreadInterface $thread)
     {
         $this->thread = $thread;
     }
 
-    /**
-     * @return ThreadInterface
-     */
-    public function getThread()
+    public function getThread(): ThreadInterface
     {
         return $this->thread;
     }

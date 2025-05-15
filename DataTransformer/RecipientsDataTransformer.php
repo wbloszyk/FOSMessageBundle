@@ -16,10 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class RecipientsDataTransformer implements DataTransformerInterface
 {
-    /**
-     * @var DataTransformerInterface
-     */
-    private $userToUsernameTransformer;
+    private DataTransformerInterface $userToUsernameTransformer;
 
     public function __construct(DataTransformerInterface $userToUsernameTransformer)
     {
@@ -33,7 +30,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
      *
      * @return string
      */
-    public function transform($recipients): mixed
+    public function transform(mixed $recipients): mixed
     {
         if (null === $recipients || 0 === $recipients->count()) {
             return '';
@@ -58,7 +55,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
      *
      * @return Collection $recipients
      */
-    public function reverseTransform($usernames): mixed
+    public function reverseTransform(mixed $usernames): mixed
     {
         if (null === $usernames || '' === $usernames) {
             return null;

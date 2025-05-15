@@ -16,38 +16,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class RecipientsType extends AbstractType
 {
-    /**
-     * @var RecipientsDataTransformer
-     */
-    private $recipientsTransformer;
+    private RecipientsDataTransformer $recipientsTransformer;
 
-    /**
-     * @param RecipientsDataTransformer $transformer
-     */
     public function __construct(RecipientsDataTransformer $transformer)
     {
         $this->recipientsTransformer = $transformer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->recipientsTransformer);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'invalid_message' => 'The selected recipient does not exist',
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $this->configureOptions($resolver);
     }
@@ -55,7 +43,7 @@ class RecipientsType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'recipients_selector';
     }
@@ -63,7 +51,7 @@ class RecipientsType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType');
     }
@@ -71,7 +59,7 @@ class RecipientsType extends AbstractType
     /**
      * @deprecated To remove when supporting only Symfony 3
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }

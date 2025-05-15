@@ -18,7 +18,7 @@ interface FinderInterface
      *
      * @return ThreadInterface[]
      */
-    public function find(Query $query);
+    public function find(Query $query): array;
 
     /**
      * Finds threads of a participant, matching a given query.

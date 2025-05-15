@@ -17,7 +17,7 @@ class ReplyMessageFormHandler extends AbstractMessageFormHandler
      *
      * @return MessageInterface the composed message ready to be sent
      */
-    public function composeMessage(AbstractMessage $message)
+    public function composeMessage(AbstractMessage $message): MessageInterface
     {
         if (!$message instanceof ReplyMessage) {
             throw new \InvalidArgumentException(sprintf('Message must be a ReplyMessage instance, "%s" given', get_class($message)));

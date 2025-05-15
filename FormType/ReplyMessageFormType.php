@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class ReplyMessageFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('body', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextareaType'), array(
@@ -24,7 +24,7 @@ class ReplyMessageFormType extends AbstractType
             ));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'intention' => 'reply',
@@ -34,7 +34,7 @@ class ReplyMessageFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'fos_message_reply_message';
     }
@@ -42,7 +42,7 @@ class ReplyMessageFormType extends AbstractType
     /**
      * @deprecated To remove when supporting only Symfony 3
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $this->configureOptions($resolver);
     }
@@ -50,7 +50,7 @@ class ReplyMessageFormType extends AbstractType
     /**
      * @deprecated To remove when supporting only Symfony 3
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }

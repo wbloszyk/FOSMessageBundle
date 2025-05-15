@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class NewThreadMultipleMessageFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('recipients', LegacyFormHelper::getType('FOS\MessageBundle\FormType\RecipientsType'), array(
@@ -33,7 +33,7 @@ class NewThreadMultipleMessageFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'fos_message_new_multiperson_thread';
     }
@@ -41,7 +41,7 @@ class NewThreadMultipleMessageFormType extends AbstractType
     /**
      * @deprecated To remove when supporting only Symfony 3
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }

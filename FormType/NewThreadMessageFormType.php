@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class NewThreadMessageFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('recipient', LegacyFormHelper::getType('FOS\UserBundle\Form\Type\UsernameFormType'), array(
@@ -32,7 +32,7 @@ class NewThreadMessageFormType extends AbstractType
             ));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'intention' => 'message',
@@ -42,7 +42,7 @@ class NewThreadMessageFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'fos_message_new_thread';
     }
@@ -50,7 +50,7 @@ class NewThreadMessageFormType extends AbstractType
     /**
      * @deprecated To remove when supporting only Symfony 3
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver): void
     {
         $this->configureOptions($resolver);
     }
@@ -58,7 +58,7 @@ class NewThreadMessageFormType extends AbstractType
     /**
      * @deprecated To remove when supporting only Symfony 3
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }

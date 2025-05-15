@@ -7,69 +7,46 @@ namespace FOS\MessageBundle\Search;
  */
 class Query
 {
-    /**
-     * @var string
-     */
-    protected $original = null;
 
-    /**
-     * @var string
-     */
-    protected $escaped = null;
+    protected ?string $original = null;
 
-    /**
-     * @param string $original
-     * @param string $escaped
-     */
-    public function __construct($original, $escaped)
+    protected ?string $escaped = null;
+
+    public function __construct(?string $original, ?string $escaped)
     {
         $this->original = $original;
         $this->escaped = $escaped;
     }
 
-    /**
-     * @return string original
-     */
-    public function getOriginal()
+    public function getOriginal(): ?string
     {
         return $this->original;
     }
 
-    /**
-     * @param string $original
-     */
-    public function setOriginal($original)
+    public function setOriginal(?string $original): void
     {
         $this->original = $original;
     }
 
-    /**
-     * @return string escaped
-     */
-    public function getEscaped()
+    public function getEscaped(): ?string
     {
         return $this->escaped;
     }
 
-    /**
-     * @param string $escaped
-     */
-    public function setEscaped($escaped)
+    public function setEscaped(?string $escaped): void
     {
         $this->escaped = $escaped;
     }
 
     /**
      * Converts to the original term string.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->getOriginal();
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->original);
     }

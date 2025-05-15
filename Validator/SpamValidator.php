@@ -11,7 +11,7 @@ class SpamValidator extends ConstraintValidator
     /**
      * @var SpamDetectorInterface
      */
-    protected $spamDetector;
+    protected SpamDetectorInterface $spamDetector;
 
     public function __construct(SpamDetectorInterface $spamDetector)
     {
@@ -24,7 +24,7 @@ class SpamValidator extends ConstraintValidator
      * @param object     $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if ($this->spamDetector->isSpam($value)) {
             $this->context->addViolation($constraint->message);

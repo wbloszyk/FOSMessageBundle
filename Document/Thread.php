@@ -20,10 +20,8 @@ abstract class Thread extends AbstractThread
     /**
      * All text contained in the thread messages
      * Used for the full text search.
-     *
-     * @var string
      */
-    protected $keywords = '';
+    protected string $keywords = '';
 
     /**
      * The activeParticipants array is a union of the activeRecipients and
@@ -31,7 +29,7 @@ abstract class Thread extends AbstractThread
      *
      * @var array of participant ID's
      */
-    protected $activeParticipants = array();
+    protected array $activeParticipants = [];
 
     /**
      * The activeRecipients array will contain a participant's ID if the thread
@@ -40,7 +38,7 @@ abstract class Thread extends AbstractThread
      *
      * @var array of participant ID's
      */
-    protected $activeRecipients = array();
+    protected array $activeRecipients = [];
 
     /**
      * The activeSenders array will contain a participant's ID if the thread is
@@ -49,14 +47,14 @@ abstract class Thread extends AbstractThread
      *
      * @var array of participant ID's
      */
-    protected $activeSenders = array();
+    protected array $activeSenders = [];
 
     /**
      * Gets the users participating in this conversation.
      *
      * @return ParticipantInterface[]
      */
-    public function getParticipants()
+    public function getParticipants(): array
     {
         return $this->participants->toArray();
     }
@@ -67,7 +65,7 @@ abstract class Thread extends AbstractThread
      *
      * @param ParticipantInterface $participant
      */
-    public function addParticipant(ParticipantInterface $participant)
+    public function addParticipant(ParticipantInterface $participant): void
     {
         if (!$this->isParticipant($participant)) {
             $this->participants->add($participant);
@@ -81,7 +79,7 @@ abstract class Thread extends AbstractThread
      *
      * @return bool
      */
-    public function isParticipant(ParticipantInterface $participant)
+    public function isParticipant(ParticipantInterface $participant): bool
     {
         return $this->participants->contains($participant);
     }
@@ -95,7 +93,7 @@ abstract class Thread extends AbstractThread
     /**
      * Performs denormalization tricks.
      */
-    public function denormalize()
+    public function denormalize(): void
     {
         $this->doCreatedByAndAt();
         $this->doLastMessageDate();
@@ -108,7 +106,7 @@ abstract class Thread extends AbstractThread
     /**
      * Ensures that the createdBy & createdAt properties are set.
      */
-    protected function doCreatedByAndAt()
+    protected function doCreatedByAndAt(): void
     {
         if (null !== $this->getCreatedBy()) {
             return;
@@ -125,7 +123,7 @@ abstract class Thread extends AbstractThread
     /**
      * Ensures that the lastMessageDate property is up to date.
      */
-    protected function doLastMessageDate()
+    protected function doLastMessageDate(): void
     {
         if (!$message = $this->getLastMessage()) {
             return;
@@ -137,7 +135,7 @@ abstract class Thread extends AbstractThread
     /**
      * Adds all messages contents to the keywords property.
      */
-    protected function doKeywords()
+    protected function doKeywords(): void
     {
         $keywords = $this->getSubject();
 
@@ -152,7 +150,7 @@ abstract class Thread extends AbstractThread
     /**
      * Denormalizes the value of isSpam to messages.
      */
-    protected function doSpam()
+    protected function doSpam(): void
     {
         foreach ($this->getMessages() as $message) {
             $message->setIsSpam($this->getIsSpam());
@@ -164,7 +162,7 @@ abstract class Thread extends AbstractThread
      *
      * Precondition: metadata exists for all thread participants
      */
-    protected function doMetadataLastMessageDates()
+    protected function doMetadataLastMessageDates(): void
     {
         foreach ($this->metadata as $meta) {
             foreach ($this->getMessages() as $message) {
@@ -184,7 +182,7 @@ abstract class Thread extends AbstractThread
     /**
      * Ensures that active participant, recipient and sender arrays are updated.
      */
-    protected function doEnsureActiveParticipantArrays()
+    protected function doEnsureActiveParticipantArrays(): void
     {
         $this->activeParticipants = array();
         $this->activeRecipients = array();

@@ -8,10 +8,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class SelfRecipientValidator extends ConstraintValidator
 {
-    /**
-     * @var ParticipantProviderInterface
-     */
-    protected $participantProvider;
+    protected ParticipantProviderInterface $participantProvider;
 
     public function __construct(ParticipantProviderInterface $participantProvider)
     {
@@ -24,7 +21,7 @@ class SelfRecipientValidator extends ConstraintValidator
      * @param object     $recipient
      * @param Constraint $constraint
      */
-    public function validate($recipient, Constraint $constraint)
+    public function validate(mixed $recipient, Constraint $constraint): void
     {
         if ($recipient === $this->participantProvider->getAuthenticatedParticipant()) {
             $this->context->addViolation($constraint->message);

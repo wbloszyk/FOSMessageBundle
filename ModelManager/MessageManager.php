@@ -14,10 +14,8 @@ abstract class MessageManager implements MessageManagerInterface
 {
     /**
      * Creates an empty message instance.
-     *
-     * @return MessageInterface
      */
-    public function createMessage()
+    public function createMessage(): MessageInterface
     {
         $class = $this->getClass();
 

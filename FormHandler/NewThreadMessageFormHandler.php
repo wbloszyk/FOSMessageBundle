@@ -17,7 +17,7 @@ class NewThreadMessageFormHandler extends AbstractMessageFormHandler
      *
      * @return MessageInterface the composed message ready to be sent
      */
-    public function composeMessage(AbstractMessage $message)
+    public function composeMessage(AbstractMessage $message): MessageInterface
     {
         if (!$message instanceof NewThreadMessage) {
             throw new \InvalidArgumentException(sprintf('Message must be a NewThreadMessage instance, "%s" given', get_class($message)));

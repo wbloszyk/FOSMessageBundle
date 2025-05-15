@@ -6,10 +6,7 @@ use FOS\MessageBundle\Model\MessageInterface;
 
 class MessageEvent extends ThreadEvent
 {
-    /**
-     * @var MessageInterface
-     */
-    private $message;
+    private MessageInterface $message;
 
     public function __construct(MessageInterface $message)
     {
@@ -21,7 +18,7 @@ class MessageEvent extends ThreadEvent
     /**
      * @return MessageInterface
      */
-    public function getMessage()
+    public function getMessage(): MessageInterface
     {
         return $this->message;
     }

@@ -9,15 +9,9 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ReplyAuthorizationValidator extends ConstraintValidator
 {
-    /**
-     * @var AuthorizerInterface
-     */
-    protected $authorizer;
+    protected AuthorizerInterface $authorizer;
 
-    /**
-     * @var ParticipantProviderInterface
-     */
-    protected $participantProvider;
+    protected ParticipantProviderInterface $participantProvider;
 
     public function __construct(AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider)
     {
@@ -31,7 +25,7 @@ class ReplyAuthorizationValidator extends ConstraintValidator
      * @param object     $value
      * @param Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         $sender = $this->participantProvider->getAuthenticatedParticipant();
         $recipients = $value->getThread()->getOtherParticipants($sender);

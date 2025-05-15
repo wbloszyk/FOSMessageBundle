@@ -18,5 +18,5 @@ interface SpamDetectorInterface
      *
      * @return bool true if it is spam, false otherwise
      */
-    public function isSpam(NewThreadMessage $message);
+    public function isSpam(NewThreadMessage $message): bool;
 }

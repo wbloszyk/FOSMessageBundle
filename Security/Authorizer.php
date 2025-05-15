@@ -12,10 +12,8 @@ use FOS\MessageBundle\Model\ThreadInterface;
  */
 class Authorizer implements AuthorizerInterface
 {
-    /**
-     * @var ParticipantProviderInterface
-     */
-    protected $participantProvider;
+
+    protected ParticipantProviderInterface $participantProvider;
 
     public function __construct(ParticipantProviderInterface $participantProvider)
     {
@@ -25,7 +23,7 @@ class Authorizer implements AuthorizerInterface
     /**
      * {@inheritdoc}
      */
-    public function canSeeThread(ThreadInterface $thread)
+    public function canSeeThread(ThreadInterface $thread): bool
     {
         return $this->getAuthenticatedParticipant() && $thread->isParticipant($this->getAuthenticatedParticipant());
     }
@@ -33,7 +31,7 @@ class Authorizer implements AuthorizerInterface
     /**
      * {@inheritdoc}
      */
-    public function canDeleteThread(ThreadInterface $thread)
+    public function canDeleteThread(ThreadInterface $thread): bool
     {
         return $this->canSeeThread($thread);
     }
@@ -41,7 +39,7 @@ class Authorizer implements AuthorizerInterface
     /**
      * {@inheritdoc}
      */
-    public function canMessageParticipant(ParticipantInterface $participant)
+    public function canMessageParticipant(ParticipantInterface $participant): bool
     {
         return true;
     }

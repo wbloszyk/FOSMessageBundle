@@ -15,19 +15,9 @@ use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
  */
 class Composer implements ComposerInterface
 {
-    /**
-     * Message manager.
-     *
-     * @var MessageManagerInterface
-     */
-    protected $messageManager;
+    protected MessageManagerInterface $messageManager;
 
-    /**
-     * Thread manager.
-     *
-     * @var ThreadManagerInterface
-     */
-    protected $threadManager;
+    protected ThreadManagerInterface $threadManager;
 
     public function __construct(MessageManagerInterface $messageManager, ThreadManagerInterface $threadManager)
     {
@@ -37,10 +27,8 @@ class Composer implements ComposerInterface
 
     /**
      * Starts composing a message, starting a new thread.
-     *
-     * @return NewThreadMessageBuilder
      */
-    public function newThread()
+    public function newThread(): NewThreadMessageBuilder
     {
         $thread = $this->threadManager->createThread();
         $message = $this->messageManager->createMessage();
@@ -50,10 +38,8 @@ class Composer implements ComposerInterface
 
     /**
      * Starts composing a message in a reply to a thread.
-     *
-     * @return ReplyMessageBuilder
      */
-    public function reply(ThreadInterface $thread)
+    public function reply(ThreadInterface $thread): ReplyMessageBuilder
     {
         $message = $this->messageManager->createMessage();
 

@@ -14,10 +14,10 @@ interface ReaderInterface
     /**
      * Marks the readable as read by the current authenticated user.
      */
-    public function markAsRead(ReadableInterface $readable);
+    public function markAsRead(ReadableInterface $readable): void;
 
     /**
      * Marks the readable as unread by the current authenticated user.
      */
-    public function markAsUnread(ReadableInterface $readable);
+    public function markAsUnread(ReadableInterface $readable): void;
 }

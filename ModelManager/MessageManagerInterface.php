@@ -22,27 +22,22 @@ interface MessageManagerInterface extends ReadableManagerInterface
      *
      * @return int the number of unread messages
      */
-    public function getNbUnreadMessageByParticipant(ParticipantInterface $participant);
+    public function getNbUnreadMessageByParticipant(ParticipantInterface $participant): int;
 
     /**
      * Creates an empty message instance.
-     *
-     * @return MessageInterface
      */
-    public function createMessage();
+    public function createMessage(): MessageInterface;
 
     /**
      * Saves a message.
      *
-     * @param MessageInterface $message
-     * @param bool             $andFlush Whether to flush the changes (default true)
+     * @param bool $andFlush Whether to flush the changes (default true)
      */
-    public function saveMessage(MessageInterface $message, $andFlush = true);
+    public function saveMessage(MessageInterface $message, bool $andFlush = true): void;
 
     /**
      * Returns the message's fully qualified class MessageManagerInterface.
-     *
-     * @return string
      */
-    public function getClass();
+    public function getClass(): string;
 }

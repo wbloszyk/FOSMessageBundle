@@ -13,11 +13,13 @@ use Twig\TwigFunction;
 
 class MessageExtension extends AbstractExtension
 {
-    protected $participantProvider;
-    protected $provider;
-    protected $authorizer;
+    protected ParticipantProviderInterface $participantProvider;
 
-    protected $nbUnreadMessagesCache;
+    protected ProviderInterface $provider;
+
+    protected AuthorizerInterface $authorizer;
+
+    protected ?int $nbUnreadMessagesCache = null;
 
     public function __construct(ParticipantProviderInterface $participantProvider, ProviderInterface $provider, AuthorizerInterface $authorizer)
     {
@@ -26,10 +28,7 @@ class MessageExtension extends AbstractExtension
         $this->authorizer = $authorizer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('fos_message_is_read', array($this, 'isRead')),
@@ -44,7 +43,7 @@ class MessageExtension extends AbstractExtension
      *
      * @return bool
      */
-    public function isRead(ReadableInterface $readable)
+    public function isRead(ReadableInterface $readable): bool
     {
         return $readable->isReadByParticipant($this->getAuthenticatedParticipant());
     }
@@ -56,7 +55,7 @@ class MessageExtension extends AbstractExtension
      *
      * @return bool true if participant can mark a thread as deleted, false otherwise
      */
-    public function canDeleteThread(ThreadInterface $thread)
+    public function canDeleteThread(ThreadInterface $thread): bool
     {
         return $this->authorizer->canDeleteThread($thread);
     }
@@ -68,7 +67,7 @@ class MessageExtension extends AbstractExtension
      *
      * @return bool true if participant has marked the thread as deleted, false otherwise
      */
-    public function isThreadDeletedByParticipant(ThreadInterface $thread)
+    public function isThreadDeletedByParticipant(ThreadInterface $thread): bool
     {
         return $thread->isDeletedByParticipant($this->getAuthenticatedParticipant());
     }
@@ -78,7 +77,7 @@ class MessageExtension extends AbstractExtension
      *
      * @return int
      */
-    public function getNbUnread()
+    public function getNbUnread(): int
     {
         if (null === $this->nbUnreadMessagesCache) {
             $this->nbUnreadMessagesCache = $this->provider->getNbUnreadMessages();
@@ -97,10 +96,7 @@ class MessageExtension extends AbstractExtension
         return $this->participantProvider->getAuthenticatedParticipant();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'fos_message';
     }

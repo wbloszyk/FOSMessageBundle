@@ -213,8 +213,8 @@ class TestThreadManager extends ThreadManager
      *
      * @param ThreadInterface $thread
      */
-    public function doCreatedByAndAt(ThreadInterface $thread)
+    public function doCreatedByAndAt(ThreadInterface $thread): void
     {
-        return parent::doCreatedByAndAt($thread);
+        parent::doCreatedByAndAt($thread);
     }
 }

@@ -17,26 +17,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class Reader implements ReaderInterface
 {
-    /**
-     * The participantProvider instance.
-     *
-     * @var ParticipantProviderInterface
-     */
-    protected $participantProvider;
+    protected ParticipantProviderInterface $participantProvider;
 
-    /**
-     * The readable manager.
-     *
-     * @var ReadableManagerInterface
-     */
-    protected $readableManager;
+    protected ReadableManagerInterface $readableManager;
 
-    /**
-     * The event dispatcher.
-     *
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
+    protected EventDispatcherInterface $dispatcher;
 
     public function __construct(ParticipantProviderInterface $participantProvider, ReadableManagerInterface $readableManager, EventDispatcherInterface $dispatcher)
     {
@@ -45,10 +30,7 @@ class Reader implements ReaderInterface
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function markAsRead(ReadableInterface $readable)
+    public function markAsRead(ReadableInterface $readable): void
     {
         $participant = $this->getAuthenticatedParticipant();
         if ($readable->isReadByParticipant($participant)) {
@@ -59,10 +41,7 @@ class Reader implements ReaderInterface
         $this->dispatcher->dispatch(new ReadableEvent($readable), FOSMessageEvents::POST_READ);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function markAsUnread(ReadableInterface $readable)
+    public function markAsUnread(ReadableInterface $readable): void
     {
         $participant = $this->getAuthenticatedParticipant();
         if (!$readable->isReadByParticipant($participant)) {
@@ -78,7 +57,7 @@ class Reader implements ReaderInterface
      *
      * @return ParticipantInterface
      */
-    protected function getAuthenticatedParticipant()
+    protected function getAuthenticatedParticipant(): ?ParticipantInterface
     {
         return $this->participantProvider->getAuthenticatedParticipant();
     }

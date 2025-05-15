@@ -17,32 +17,18 @@ use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
  */
 class ThreadManager extends BaseThreadManager
 {
-    /**
-     * @var DocumentManager
-     */
-    protected $dm;
+    protected DocumentManager $dm;
 
-    /**
-     * @var DocumentRepository
-     */
-    protected $repository;
+    protected DocumentRepository $repository;
 
-    /**
-     * @var string
-     */
-    protected $class;
+    protected string $class;
 
-    /**
-     * @var string
-     */
-    protected $metaClass;
+    protected string $metaClass;
 
     /**
      * The message manager, required to mark thread messages as read/unread.
-     *
-     * @var MessageManager
      */
-    protected $messageManager;
+    protected MessageManager $messageManager;
 
     /**
      * Constructor.
@@ -61,17 +47,11 @@ class ThreadManager extends BaseThreadManager
         $this->messageManager = $messageManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function findThreadById($id)
     {
         return $this->repository->find($id);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder()

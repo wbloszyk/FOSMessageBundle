@@ -17,10 +17,8 @@ interface ThreadManagerInterface extends ReadableManagerInterface
 {
     /**
      * Finds a thread by its ID.
-     *
-     * @return ThreadInterface or null
      */
-    public function findThreadById($id);
+    public function findThreadById($id): ?ThreadInterface;
 
     /**
      * Finds not deleted threads for a participant,
@@ -40,11 +38,9 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * ordered by last message not written by this participant in reverse order.
      * In one word: an inbox.
      *
-     * @param ParticipantInterface $participant
-     *
      * @return ThreadInterface[]
      */
-    public function findParticipantInboxThreads(ParticipantInterface $participant);
+    public function findParticipantInboxThreads(ParticipantInterface $participant): array;
 
     /**
      * Finds not deleted threads from a participant,
@@ -64,17 +60,13 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * ordered by last message written by this participant in reverse order.
      * In one word: an sentbox.
      *
-     * @param ParticipantInterface $participant
-     *
      * @return ThreadInterface[]
      */
-    public function findParticipantSentThreads(ParticipantInterface $participant);
+    public function findParticipantSentThreads(ParticipantInterface $participant): array;
 
     /**
      * Finds deleted threads from a participant,
      * ordered by last message date.
-     *
-     * @param ParticipantInterface $participant
      *
      * @return Builder a query builder suitable for pagination
      */
@@ -88,7 +80,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      *
      * @return ThreadInterface[]
      */
-    public function findParticipantDeletedThreads(ParticipantInterface $participant);
+    public function findParticipantDeletedThreads(ParticipantInterface $participant): array;
 
     /**
      * Finds not deleted threads for a participant,
@@ -100,35 +92,30 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      *
      * @return Builder a query builder suitable for pagination
      */
-    public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search);
+    public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, string $search);
 
     /**
      * Finds not deleted threads for a participant,
      * matching the given search term
      * ordered by last message not written by this participant in reverse order.
      *
-     * @param ParticipantInterface $participant
-     * @param string               $search
-     *
      * @return ThreadInterface[]
      */
-    public function findParticipantThreadsBySearch(ParticipantInterface $participant, $search);
+    public function findParticipantThreadsBySearch(ParticipantInterface $participant, string $search): array;
 
     /**
      * Gets threads created by a participant.
      *
-     * @param ParticipantInterface $participant
-     *
      * @return ThreadInterface[]
      */
-    public function findThreadsCreatedBy(ParticipantInterface $participant);
+    public function findThreadsCreatedBy(ParticipantInterface $participant): array;
 
     /**
      * Creates an empty comment thread instance.
      *
      * @return ThreadInterface
      */
-    public function createThread();
+    public function createThread(): ThreadInterface;
 
     /**
      * Saves a thread.
@@ -136,7 +123,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * @param ThreadInterface $thread
      * @param bool            $andFlush Whether to flush the changes (default true)
      */
-    public function saveThread(ThreadInterface $thread, $andFlush = true);
+    public function saveThread(ThreadInterface $thread, bool $andFlush = true): void;
 
     /**
      * Deletes a thread
@@ -144,5 +131,5 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      *
      * @param ThreadInterface $thread the thread to delete
      */
-    public function deleteThread(ThreadInterface $thread);
+    public function deleteThread(ThreadInterface $thread): void;
 }

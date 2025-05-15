@@ -13,19 +13,9 @@ use FOS\MessageBundle\Security\ParticipantProviderInterface;
  */
 class Finder implements FinderInterface
 {
-    /**
-     * The participant provider instance.
-     *
-     * @var ParticipantProviderInterface
-     */
-    protected $participantProvider;
+    protected ParticipantProviderInterface $participantProvider;
 
-    /**
-     * The thread manager.
-     *
-     * @var ThreadManagerInterface
-     */
-    protected $threadManager;
+    protected ThreadManagerInterface $threadManager;
 
     public function __construct(ParticipantProviderInterface $participantProvider, ThreadManagerInterface $threadManager)
     {
@@ -33,17 +23,11 @@ class Finder implements FinderInterface
         $this->threadManager = $threadManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function find(Query $query)
+    public function find(Query $query): array
     {
         return $this->threadManager->findParticipantThreadsBySearch($this->getAuthenticatedParticipant(), $query->getEscaped());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getQueryBuilder(Query $query)
     {
         return $this->threadManager->getParticipantThreadsBySearchQueryBuilder($this->getAuthenticatedParticipant(), $query->getEscaped());

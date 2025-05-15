@@ -19,25 +19,13 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 abstract class AbstractMessageFormHandler
 {
-    protected $request;
-    protected $composer;
-    protected $sender;
-    protected $participantProvider;
+    protected RequestStack $request;
+    protected ComposerInterface $composer;
+    protected SenderInterface $sender;
+    protected ParticipantProviderInterface $participantProvider;
 
-    /**
-     * @param Request|RequestStack         $request
-     * @param ComposerInterface            $composer
-     * @param SenderInterface              $sender
-     * @param ParticipantProviderInterface $participantProvider
-     */
-    public function __construct($request, ComposerInterface $composer, SenderInterface $sender, ParticipantProviderInterface $participantProvider)
+    public function __construct(RequestStack $request, ComposerInterface $composer, SenderInterface $sender, ParticipantProviderInterface $participantProvider)
     {
-        if ($request instanceof Request) {
-            @trigger_error(sprintf('Using an instance of "%s" as first parameter of "%s" is deprecated since version 1.3 and won\'t be supported in 2.0. Use an instance of "Symfony\Component\HttpFoundation\RequestStack" instead.', get_class($request), __METHOD__), E_USER_DEPRECATED);
-        } elseif (!$request instanceof RequestStack) {
-            throw new \InvalidArgumentException(sprintf('AbstractMessageFormHandler expected a Request or RequestStack, %s given', is_object($request) ? get_class($request) : gettype($request)));
-        }
-
         $this->request = $request;
         $this->composer = $composer;
         $this->sender = $sender;
@@ -75,7 +63,7 @@ abstract class AbstractMessageFormHandler
      *
      * @return MessageInterface the sent message
      */
-    public function processValidForm(Form $form)
+    public function processValidForm(Form $form): MessageInterface
     {
         $message = $this->composeMessage($form->getData());
         $this->sender->send($message);
@@ -90,7 +78,7 @@ abstract class AbstractMessageFormHandler
      *
      * @return MessageInterface the composed message ready to be sent
      */
-    abstract protected function composeMessage(AbstractMessage $message);
+    abstract protected function composeMessage(AbstractMessage $message): MessageInterface;
 
     /**
      * Gets the current authenticated user.
@@ -104,19 +92,9 @@ abstract class AbstractMessageFormHandler
 
     /**
      * BC layer to retrieve the current request directly or from a stack.
-     *
-     * @return Request
      */
-    private function getCurrentRequest()
+    private function getCurrentRequest(): Request
     {
-        if (!$this->request) {
-            throw new \RuntimeException('Current request was not provided to the form handler.');
-        }
-
-        if ($this->request instanceof Request) {
-            return $this->request;
-        }
-
         if (!$this->request->getCurrentRequest()) {
             throw new \RuntimeException('Request stack provided to the form handler did not contains a current request.');
         }

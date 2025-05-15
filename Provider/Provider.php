@@ -3,6 +3,7 @@
 namespace FOS\MessageBundle\Provider;
 
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\ModelManager\MessageManagerInterface;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
 use FOS\MessageBundle\Reader\ReaderInterface;
@@ -18,40 +19,18 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class Provider implements ProviderInterface
 {
-    /**
-     * The thread manager.
-     *
-     * @var ThreadManagerInterface
-     */
-    protected $threadManager;
+    protected ThreadManagerInterface $threadManager;
 
-    /**
-     * The message manager.
-     *
-     * @var MessageManagerInterface
-     */
-    protected $messageManager;
+    protected MessageManagerInterface $messageManager;
 
     /**
      * The reader used to mark threads as read.
-     *
-     * @var ReaderInterface
      */
-    protected $threadReader;
+    protected ReaderInterface $threadReader;
 
-    /**
-     * The authorizer manager.
-     *
-     * @var authorizerInterface
-     */
-    protected $authorizer;
+    protected AuthorizerInterface $authorizer;
 
-    /**
-     * The participant provider instance.
-     *
-     * @var ParticipantProviderInterface
-     */
-    protected $participantProvider;
+    protected ParticipantProviderInterface $participantProvider;
 
     public function __construct(ThreadManagerInterface $threadManager, MessageManagerInterface $messageManager, ReaderInterface $threadReader, AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider)
     {
@@ -62,40 +41,28 @@ class Provider implements ProviderInterface
         $this->participantProvider = $participantProvider;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getInboxThreads()
+    public function getInboxThreads(): array
     {
         $participant = $this->getAuthenticatedParticipant();
 
         return $this->threadManager->findParticipantInboxThreads($participant);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSentThreads()
+    public function getSentThreads(): array
     {
         $participant = $this->getAuthenticatedParticipant();
 
         return $this->threadManager->findParticipantSentThreads($participant);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getDeletedThreads()
+    public function getDeletedThreads(): array
     {
         $participant = $this->getAuthenticatedParticipant();
 
         return $this->threadManager->findParticipantDeletedThreads($participant);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getThread($threadId)
+    public function getThread($threadId): ThreadInterface
     {
         $thread = $this->threadManager->findThreadById($threadId);
         if (!$thread) {
@@ -112,10 +79,7 @@ class Provider implements ProviderInterface
         return $thread;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getNbUnreadMessages()
+    public function getNbUnreadMessages(): int
     {
         return $this->messageManager->getNbUnreadMessageByParticipant($this->getAuthenticatedParticipant());
     }

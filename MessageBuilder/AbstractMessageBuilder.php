@@ -15,17 +15,13 @@ abstract class AbstractMessageBuilder
 {
     /**
      * The message we are building.
-     *
-     * @var MessageInterface
      */
-    protected $message;
+    protected MessageInterface $message;
 
     /**
      * The thread the message goes in.
-     *
-     * @var ThreadInterface
      */
-    protected $thread;
+    protected ThreadInterface $thread;
 
     public function __construct(MessageInterface $message, ThreadInterface $thread)
     {
@@ -36,34 +32,19 @@ abstract class AbstractMessageBuilder
         $thread->addMessage($message);
     }
 
-    /**
-     * Gets the created message.
-     *
-     * @return MessageInterface the message created
-     */
-    public function getMessage()
+    public function getMessage(): MessageInterface
     {
         return $this->message;
     }
 
-    /**
-     * @param  string
-     *
-     * @return AbstractMessageBuilder (fluent interface)
-     */
-    public function setBody($body)
+    public function setBody(string $body): self
     {
         $this->message->setBody($body);
 
         return $this;
     }
 
-    /**
-     * @param ParticipantInterface $sender
-     *
-     * @return AbstractMessageBuilder (fluent interface)
-     */
-    public function setSender(ParticipantInterface $sender)
+    public function setSender(ParticipantInterface $sender): self
     {
         $this->message->setSender($sender);
         $this->thread->addParticipant($sender);

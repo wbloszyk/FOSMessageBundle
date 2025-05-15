@@ -18,26 +18,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class Deleter implements DeleterInterface
 {
-    /**
-     * The authorizer instance.
-     *
-     * @var AuthorizerInterface
-     */
-    protected $authorizer;
+    protected AuthorizerInterface $authorizer;
 
-    /**
-     * The participant provider instance.
-     *
-     * @var ParticipantProviderInterface
-     */
-    protected $participantProvider;
+    protected ParticipantProviderInterface $participantProvider;
 
-    /**
-     * The event dispatcher.
-     *
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
+    protected EventDispatcherInterface $dispatcher;
 
     public function __construct(AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider, EventDispatcherInterface $dispatcher)
     {
@@ -46,10 +31,7 @@ class Deleter implements DeleterInterface
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function markAsDeleted(ThreadInterface $thread)
+    public function markAsDeleted(ThreadInterface $thread): void
     {
         if (!$this->authorizer->canDeleteThread($thread)) {
             throw new AccessDeniedException('You are not allowed to delete this thread');
@@ -59,10 +41,7 @@ class Deleter implements DeleterInterface
         $this->dispatcher->dispatch(new ThreadEvent($thread), FOSMessageEvents::POST_DELETE);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function markAsUndeleted(ThreadInterface $thread)
+    public function markAsUndeleted(ThreadInterface $thread): void
     {
         if (!$this->authorizer->canDeleteThread($thread)) {
             throw new AccessDeniedException('You are not allowed to delete this thread');

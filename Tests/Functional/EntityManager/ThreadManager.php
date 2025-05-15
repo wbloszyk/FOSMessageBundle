@@ -10,7 +10,7 @@ use FOS\MessageBundle\Tests\Functional\Entity\Thread;
 
 class ThreadManager extends BaseThreadManager
 {
-    public function findThreadById($id)
+    public function findThreadById($id): ?ThreadInterface
     {
         return new Thread();
     }
@@ -19,7 +19,7 @@ class ThreadManager extends BaseThreadManager
     {
     }
 
-    public function findParticipantInboxThreads(ParticipantInterface $participant)
+    public function findParticipantInboxThreads(ParticipantInterface $participant): array
     {
         return array(new Thread());
     }
@@ -28,7 +28,7 @@ class ThreadManager extends BaseThreadManager
     {
     }
 
-    public function findParticipantSentThreads(ParticipantInterface $participant)
+    public function findParticipantSentThreads(ParticipantInterface $participant): array
     {
         return array();
     }
@@ -37,7 +37,7 @@ class ThreadManager extends BaseThreadManager
     {
     }
 
-    public function findParticipantDeletedThreads(ParticipantInterface $participant)
+    public function findParticipantDeletedThreads(ParticipantInterface $participant): array
     {
         return array();
     }
@@ -46,33 +46,33 @@ class ThreadManager extends BaseThreadManager
     {
     }
 
-    public function findParticipantThreadsBySearch(ParticipantInterface $participant, $search)
+    public function findParticipantThreadsBySearch(ParticipantInterface $participant, $search): array
     {
         return array();
     }
 
-    public function findThreadsCreatedBy(ParticipantInterface $participant)
+    public function findThreadsCreatedBy(ParticipantInterface $participant): array
     {
         return array();
     }
 
-    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
+    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant): void
     {
     }
 
-    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
+    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant): void
     {
     }
 
-    public function saveThread(ThreadInterface $thread, $andFlush = true)
+    public function saveThread(ThreadInterface $thread, $andFlush = true): void
     {
     }
 
-    public function deleteThread(ThreadInterface $thread)
+    public function deleteThread(ThreadInterface $thread): void
     {
     }
 
-    public function getClass()
+    public function getClass(): string
     {
         return Thread::class;
     }
