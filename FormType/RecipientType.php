@@ -2,7 +2,7 @@
 
 namespace FOS\MessageBundle\FormType;
 
-use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
+use FOS\MessageBundle\DataTransformer\RecipientDataTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,11 +13,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Łukasz Pospiech <zocimek@gmail.com>
  */
-class RecipientsType extends AbstractType
+class RecipientType extends AbstractType
 {
-    private RecipientsDataTransformer $recipientsTransformer;
+    private RecipientDataTransformer $recipientsTransformer;
 
-    public function __construct(RecipientsDataTransformer $transformer)
+    public function __construct(RecipientDataTransformer $transformer)
     {
         $this->recipientsTransformer = $transformer;
     }
@@ -39,7 +39,7 @@ class RecipientsType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'recipients_selector';
+        return 'recipient_selector';
     }
 
     /**

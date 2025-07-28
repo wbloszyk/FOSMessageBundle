@@ -18,12 +18,12 @@ class SelfRecipientValidator extends ConstraintValidator
     /**
      * Indicates whether the constraint is valid.
      *
-     * @param object     $recipient
-     * @param Constraint $constraint
+     * @param object     $value
+     * @param SelfRecipient $constraint
      */
-    public function validate(mixed $recipient, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
-        if ($recipient === $this->participantProvider->getAuthenticatedParticipant()) {
+        if ($value === $this->participantProvider->getAuthenticatedParticipant()) {
             $this->context->addViolation($constraint->message);
         }
     }

@@ -18,12 +18,12 @@ class AuthorizationValidator extends ConstraintValidator
     /**
      * Indicates whether the constraint is valid.
      *
-     * @param object     $recipient
+     * @param object     $value
      * @param Constraint $constraint
      */
-    public function validate(mixed $recipient, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
-        if ($recipient && !$this->authorizer->canMessageParticipant($recipient)) {
+        if ($value && !$this->authorizer->canMessageParticipant($value)) {
             $this->context->addViolation($constraint->message);
         }
     }

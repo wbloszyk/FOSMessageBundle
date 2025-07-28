@@ -21,15 +21,15 @@ interface ReadableManagerInterface
      * as well as marking them as read.
      *
      * @param ReadableInterface    $readable
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      */
-    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user): void;
+    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant): void;
 
     /**
      * Marks the readable as unread by this participant.
      *
      * @param ReadableInterface    $readable
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      */
-    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user): void;
+    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant): void;
 }
