@@ -55,6 +55,15 @@
             <argument type="service" id="fos_message.recipients_data_transformer" />
             <tag name="form.type" alias="recipients_selector" />
         </service>
+
+        <service id="fos_message.recipient_data_transformer" class="FOS\MessageBundle\DataTransformer\RecipientDataTransformer"  public="false">
+            <argument type="service" id="fos_user.user_to_username_transformer" />
+        </service>
+
+        <service id="fos_message.recipient_selector" class="FOS\MessageBundle\FormType\RecipientType" public="true">
+            <argument type="service" id="fos_message.recipient_data_transformer" />
+            <tag name="form.type" alias="recipient_selector" />
+        </service>
     </services>
 
 </container>
