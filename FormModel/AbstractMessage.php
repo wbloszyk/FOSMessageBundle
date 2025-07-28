@@ -11,7 +11,7 @@ abstract class AbstractMessage
         return $this->body;
     }
 
-    public function setBody(string $body): self
+    public function setBody(string $body): void
     {
         $this->body = $body;
     }
